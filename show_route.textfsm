@@ -1,0 +1,14 @@
+Value Filldown devicename (\w+)
+Value Filldown IPADDRESS (\d+\.\d+\.\d+\.\d+)
+Value Filldown VRFNAME (\S.+)
+Value MASK (\d+\.\d+\.\d+\.\d+)
+Value SOO (\d+:\d+)
+Value LOCALPERF (\w+)
+Value List ROUTETARGETLIST (\S.+)
+
+Start 
+  ^${devicename}[>#].*vrf\s+${VRFNAME}\s+${IPADDRESS}\s+${MASK}\s+| sec.* 
+  ^\s+.*localpref ${LOCALPERF}.*external.*
+  ^\s+Extended Community: SoO:${SOO}\s$ROUTETARGETLIST
+  ^\s+RT:$ROUTETARGETLIST
+  ^.*!!!!checking!!! -> Record
